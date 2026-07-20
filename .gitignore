@@ -1,3 +1,4 @@
 node_modules/
 .env
 dist/
+logo_512x512.png
