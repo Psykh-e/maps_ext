@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Maps Ultra Arsiv Goruntule</title>
+  <link rel="stylesheet" href="archive-view.css" />
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <div class="brand-block">
+        <div class="brand-row">
+          <img src="logo_512x512.png" alt="Maps Ultra logo" class="brand-logo" />
+          <div>
+            <p class="eyebrow">Maps Ultra</p>
+            <h1>Arsiv ve Iletisim Akisi</h1>
+          </div>
+        </div>
+        <p id="metaText" class="meta">Dosya okunuyor...</p>
+      </div>
+      <div class="topbar-actions">
+        <button id="saveArchiveBtn" type="button" class="primary-btn">Arşivi Kaydet</button>
+        <button id="reloadBtn" type="button">Yenile</button>
+      </div>
+    </header>
+
+    <section class="workspace">
+      <div class="toolbar">
+        <div class="toolbar-row">
+          <input id="groqApiKeyInput" type="password" placeholder="Groq API Key (gsk_...)" />
+          <input id="groqModelInput" type="text" placeholder="Model (or. llama-3.3-70b-versatile)" />
+          <button id="saveAiConfigBtn" type="button">AI Ayarlari Kaydet</button>
+        </div>
+        <div class="toolbar-row">
+          <input id="searchInput" type="search" placeholder="Isletme, telefon, web, adres ara..." />
+          <input id="cityInput" type="search" placeholder="Sehir filtrele..." />
+          <input id="districtInput" type="search" placeholder="Ilce filtrele..." />
+          <input id="domainInput" type="search" placeholder="Domain filtrele..." />
+          <select id="sortField">
+            <option value="fetchedAt">Sirala: Tarih</option>
+            <option value="name">Sirala: Isletme</option>
+            <option value="city">Sirala: Sehir</option>
+            <option value="district">Sirala: Ilce</option>
+            <option value="websiteDomain">Sirala: Domain</option>
+            <option value="rating">Sirala: Puan</option>
+          </select>
+          <select id="sortDirection">
+            <option value="desc">Azalan</option>
+            <option value="asc">Artan</option>
+          </select>
+          <button id="clearFiltersBtn" type="button">Temizle</button>
+        </div>
+        <div class="toolbar-row toolbar-row-filters">
+          <input id="ratingMinInput" type="number" min="0" max="5" step="0.1" placeholder="Min puan" />
+          <input id="ratingMaxInput" type="number" min="0" max="5" step="0.1" value="5" placeholder="Max puan" />
+          <select id="websiteFilter">
+            <option value="all">Web: Hepsi</option>
+            <option value="with">Web: Var</option>
+            <option value="without">Web: Yok</option>
+          </select>
+          <select id="phoneFilter">
+            <option value="all">Telefon: Hepsi</option>
+            <option value="with">Telefon: Var</option>
+            <option value="without">Telefon: Yok</option>
+          </select>
+          <select id="messageFilter">
+            <option value="all">Mesaj: Hepsi</option>
+            <option value="eligible">Mesaj Uygun</option>
+            <option value="generated">Mesaj Uretildi</option>
+          </select>
+          <select id="messagePresenceFilter">
+            <option value="all">Kayıtlı Mesaj: Hepsi</option>
+            <option value="with">Kayıtlı Mesaj: Var</option>
+            <option value="without">Kayıtlı Mesaj: Yok</option>
+          </select>
+          <select id="statusFilter">
+            <option value="all">Durum: Hepsi</option>
+            <option value="none">Durum: Bekleyen</option>
+            <option value="sent">Durum: Mesaj Gonderilenler</option>
+            <option value="followup">Durum: Takip</option>
+            <option value="replied">Durum: Yanitlandi</option>
+            <option value="meeting">Durum: Gorusme</option>
+            <option value="closed">Durum: Tamamlandi</option>
+            <option value="draft">Durum: Taslak</option>
+          </select>
+          <input id="savedMessageSearch" type="search" placeholder="Kayıtlı mesajda ara..." />
+          <input id="dateFromInput" type="date" />
+          <input id="dateToInput" type="date" />
+        </div>
+      </div>
+
+      <div class="table-shell">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Isletme</th>
+                <th>Telefon</th>
+                <th>Web</th>
+                <th>Domain</th>
+                <th>Adres</th>
+                <th>Ilce</th>
+                <th>Sehir</th>
+                <th>Puan</th>
+                <th>Maps</th>
+                <th>Tarih</th>
+                <th>Durum</th>
+                <th>Mesaj</th>
+              </tr>
+            </thead>
+            <tbody id="archiveBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <aside id="composerDrawer" class="composer hidden" aria-live="polite">
+      <div class="composer-head">
+        <div>
+          <p class="composer-eyebrow">Hizli Mesaj</p>
+          <h2>Mesaj Taslagi</h2>
+        </div>
+        <button id="closeComposerBtn" type="button" class="ghost-btn">Kapat</button>
+      </div>
+      <p id="messageTarget" class="message-target">Mesaj hedefi secilmedi.</p>
+      <div id="messageOutput" class="message-output" contenteditable="true" role="textbox" aria-label="Uretilen mesaj">
+      </div>
+      <div class="composer-actions">
+        <button id="copyMessageBtn" type="button">Mesaji Kopyala</button>
+        <button id="regenerateMessageBtn" type="button">Tekrar Uret</button>
+        <button id="sendMessageBtn" type="button" class="primary-btn">Mesaji Gonder</button>
+      </div>
+    </aside>
+
+    <p id="errorText" class="error hidden"></p>
+  </main>
+  <script src="archive-view.js"></script>
+</body>
+</html>

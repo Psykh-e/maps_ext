@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Maps Ultra Side Panel</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body class="sidepanel">
+    <main class="app">
+      <header class="header">
+        <h1>Maps Ultra Toplayici</h1>
+        <p>Google Maps sonucundan detayli kayit toplama (Side Panel)</p>
+      </header>
+
+      <section class="card">
+        <form id="scrapeForm">
+          <div class="grid">
+            <label>
+              <span>Kategori</span>
+              <input id="category" name="category" type="text" placeholder="Restoran" required />
+            </label>
+            <label>
+              <span>Sehir</span>
+              <input id="city" name="city" type="text" placeholder="Istanbul" required />
+            </label>
+            <label>
+              <span>Ilceler</span>
+              <textarea id="district" name="district" placeholder="Fatih, Eyup&#10;Kadikoy" required></textarea>
+            </label>
+            <label>
+              <span>Ilce Basina Kayit</span>
+              <input id="maxResults" name="maxResults" type="number" min="1" max="2000" value="100" />
+            </label>
+            <label>
+              <span>Kayit Klasoru (Downloads alti)</span>
+              <input id="storageFolder" name="storageFolder" type="text" placeholder="maps-ultra-store" />
+            </label>
+          </div>
+
+          <div class="toggles">
+            <label class="inline">
+              <input id="strictLocation" name="strictLocation" type="checkbox" disabled />
+              <span>Konum filtresi (kapali)</span>
+            </label>
+            <label class="inline">
+              <input id="safeMode" name="safeMode" type="checkbox" checked />
+              <span>Guvenli/yavas mod</span>
+            </label>
+            <label class="inline">
+              <input id="skipExisting" name="skipExisting" type="checkbox" checked />
+              <span>Mevcut kayitlari atla, yeni isletme bul</span>
+            </label>
+          </div>
+
+          <div class="actions">
+            <button id="startBtn" type="submit" class="primary">Baslat</button>
+            <button id="stopBtn" type="button">Durdur</button>
+            <button id="importJsonBtn" type="button">JSON Import</button>
+            <button id="viewArchiveBtn" type="button">Goruntule</button>
+            <button id="clearBtn" type="button">Temizle</button>
+          </div>
+          <input id="importJsonInput" type="file" accept=".json,application/json" hidden />
+        </form>
+      </section>
+
+      <section class="card">
+        <div class="status-row">
+          <div>
+            <strong>Durum:</strong>
+            <span id="statusText">Hazir</span>
+          </div>
+          <div>
+            <strong>Kayit:</strong>
+            <span id="countText">0</span>
+          </div>
+          <div>
+            <strong>Arsiv:</strong>
+            <span id="archiveText">0</span>
+          </div>
+        </div>
+        <div class="progress">
+          <div id="progressFill"></div>
+        </div>
+        <p id="messageText" class="message">Bekleniyor...</p>
+        <p id="errorText" class="error hidden"></p>
+      </section>
+
+      <section class="card">
+        <div class="log-head">
+          <strong>Canli Log</strong>
+          <div class="log-actions">
+            <button id="copyLogsBtn" type="button">Log Kopyala</button>
+            <button id="clearLogsBtn" type="button">Log Temizle</button>
+          </div>
+        </div>
+        <pre id="logsText" class="logs-box">Log bekleniyor...</pre>
+      </section>
+
+      <section class="card">
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Isletme</th>
+                <th>Puan</th>
+                <th>Fiyat</th>
+                <th>Telefon</th>
+                <th>Web</th>
+                <th>Adres</th>
+                <th>Ilce</th>
+                <th>Sehir</th>
+              </tr>
+            </thead>
+            <tbody id="resultsBody"></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script src="popup.js"></script>
+  </body>
+</html>

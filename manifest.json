@@ -1,0 +1,49 @@
+{
+  "manifest_version": 3,
+  "name": "Google Maps Ultra Detay Toplayici",
+  "description": "Google Maps aramalarindan isletme verilerini toplayip side panel ve JSON arsiv olarak sunar.",
+  "version": "1.0.0",
+  "permissions": [
+    "tabs",
+    "storage",
+    "sidePanel",
+    "downloads",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "https://www.google.com/maps/*",
+    "https://api.groq.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Maps Toplayici",
+    "default_icon": {
+      "16": "logo_512x512.png",
+      "32": "logo_512x512.png",
+      "48": "logo_512x512.png",
+      "128": "logo_512x512.png"
+    }
+  },
+  "icons": {
+    "16": "logo_512x512.png",
+    "32": "logo_512x512.png",
+    "48": "logo_512x512.png",
+    "128": "logo_512x512.png"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.com/maps/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}
