@@ -29,7 +29,13 @@
       <div class="toolbar">
         <div class="toolbar-row">
           <input id="groqApiKeyInput" type="password" placeholder="Groq API Key (gsk_...)" />
-          <input id="groqModelInput" type="text" placeholder="Model (or. llama-3.3-70b-versatile)" />
+          <!-- <input id="groqModelInput" type="text" placeholder="Model (or. llama-3.3-70b-versatile)" /> -->
+          <select id="groqModelInput">
+            <option value="llama-3.3-70b-versatile">llama-3.3-70b-versatile</option>
+            <option value="llama-3.1-8b-instant">llama-3.1-8b-instant</option>
+            <option value="groq/compound">groq/compound</option>
+          </select>
+
           <button id="saveAiConfigBtn" type="button">AI Ayarlari Kaydet</button>
         </div>
         <div class="toolbar-row">
